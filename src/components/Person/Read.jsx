@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import axios from 'axios';
 import { useParams, Link } from 'react-router-dom';
 
@@ -7,22 +7,26 @@ const Read = () => {
   const [error, setError] = useState("");
   const { id } = useParams();
 
+  const headers = useMemo(() => ({
+    "Content-Type": "application/json",
+    Authorization:
+      "Bearer be65c1c7dbb1af760b8a450dd6875873b8a93e9a6af1dea2570b0880abf1cd13",
+  }), []);
+
   useEffect(() => {
     axios
-      .get(`https://gorest.co.in/public/v2/users/${id}`)
+      .get(`https://gorest.co.in/public/v2/users/${id}`, { headers })
       .then((res) => {
-        console.log(res.data);
         setData(res.data);
       })
       .catch((err) => {
-        console.log(err);
         if (err.response && err.response.status === 404) {
           setError("User not found");
         } else {
           setError("An error occurred while fetching the user data");
         }
       });
-  }, [id]);
+  }, [id, headers]); // Include `headers` here as it's now stable
 
   if (error) {
     return (

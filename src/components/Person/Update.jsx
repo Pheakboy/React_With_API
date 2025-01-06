@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import { useParams, useNavigate, Link } from 'react-router-dom';
+import React, { useEffect, useState, useMemo } from "react";
+import axios from "axios";
+import { useParams, useNavigate, Link } from "react-router-dom";
 
 const Update = () => {
   const [values, setValues] = useState({
@@ -13,21 +13,29 @@ const Update = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
+  const headers = useMemo(
+    () => ({
+      "Content-Type": "application/json",
+      Authorization:
+        "Bearer be65c1c7dbb1af760b8a450dd6875873b8a93e9a6af1dea2570b0880abf1cd13",
+    }),
+    []
+  );
+
   useEffect(() => {
     axios
-      .get(`https://gorest.co.in/public/v2/users/${id}`)
+      .get(`https://gorest.co.in/public/v2/users/${id}`, { headers })
       .then((res) => {
         setValues(res.data);
       })
       .catch((err) => {
-        console.log(err);
         if (err.response && err.response.status === 404) {
           setError("User not found");
         } else {
           setError("An error occurred while fetching the user data");
         }
       });
-  }, [id]);
+  }, [id, headers]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -35,27 +43,15 @@ const Update = () => {
       setError("All fields are required");
       return;
     }
-    setError(""); 
-    
+    setError("");
+
     axios
-      .put(`https://gorest.co.in/public/v2/users/${id}`, values, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization:
-            "Bearer be65c1c7dbb1af760b8a450dd6875873b8a93e9a6af1dea2570b0880abf1cd13",
-        },
-      })
-      .then((res) => {
-        console.log("User updated:", res.data);
-        navigate("/"); 
+      .put(`https://gorest.co.in/public/v2/users/${id}`, values, { headers })
+      .then(() => {
+        navigate("/");
       })
       .catch((err) => {
-        console.error(err);
-        if (err.response && err.response.data) {
-          setError(err.response.data.message || "Failed to update user");
-        } else {
-          setError("Failed to update user");
-        }
+        setError(err.response?.data?.message || "Failed to update user");
       });
   };
 
@@ -73,13 +69,11 @@ const Update = () => {
               Name
             </label>
             <input
-              onChange={e => setValues({ ...values, name: e.target.value })}
+              onChange={(e) => setValues({ ...values, name: e.target.value })}
               type="text"
               id="name"
-              name="name"
               value={values.name}
-              placeholder="Enter your name ..."
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md"
             />
           </div>
           <div className="mb-4">
@@ -90,7 +84,7 @@ const Update = () => {
               Email
             </label>
             <input
-              onChange={e => setValues({ ...values, email: e.target.value })}
+              onChange={(e) => setValues({ ...values, email: e.target.value })}
               type="email"
               id="email"
               name="email"
@@ -107,7 +101,7 @@ const Update = () => {
               Gender
             </label>
             <select
-              onChange={e => setValues({ ...values, gender: e.target.value })}
+              onChange={(e) => setValues({ ...values, gender: e.target.value })}
               id="gender"
               name="gender"
               value={values.gender}
@@ -126,7 +120,7 @@ const Update = () => {
               Status
             </label>
             <select
-              onChange={e => setValues({ ...values, status: e.target.value })}
+              onChange={(e) => setValues({ ...values, status: e.target.value })}
               id="status"
               name="status"
               value={values.status}
@@ -137,17 +131,18 @@ const Update = () => {
               <option value="inactive">Inactive</option>
             </select>
           </div>
-          <div className="mb-4">
-            <button
-              type="submit"
-              className="bg-green-500 text-white px-4 py-2 rounded mr-4 hover:bg-green-600"
-            >
-              Update
-            </button>
-            <Link to="/" className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
-              Back
-            </Link>
-          </div>
+          <button
+            type="submit"
+            className="bg-green-500 text-white px-4 py-2 rounded mr-4 hover:bg-green-600"
+          >
+            Update
+          </button>
+          <Link
+            to="/"
+            className="bg-blue-500 text-white px-4 py-2 rounded ml-3"
+          >
+            Back
+          </Link>
         </form>
       </div>
     </div>
