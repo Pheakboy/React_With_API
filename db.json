@@ -1,0 +1,164 @@
+{
+    "users" :[
+        {
+            "id": 1,
+            "name": "John Doe",
+            "username": "johndoe",
+            "email": "johndoe@gmail.com",
+            "phone": "0324249924",
+            "website": "johndoe.com"
+        },
+        {
+            "id": 2,
+            "name": "Jane Smith",
+            "username": "janesmith",
+            "email": "janesmith@gmail.com",
+            "phone": "0324249925",
+            "website": "janesmith.com"
+        },
+        {
+            "id": 3,
+            "name": "Alice Johnson",
+            "username": "alicejohnson",
+            "email": "alicejohnson@gmail.com",
+            "phone": "0324249926",
+            "website": "alicejohnson.com"
+        },
+        {
+            "id": 4,
+            "name": "Bob Brown",
+            "username": "bobbrown",
+            "email": "bobbrown@gmail.com",
+            "phone": "0324249927",
+            "website": "bobbrown.com"
+        },
+        {
+            "id": 5,
+            "name": "Charlie Davis",
+            "username": "charliedavis",
+            "email": "charliedavis@gmail.com",
+            "phone": "0324249928",
+            "website": "charliedavis.com"
+        },
+        {
+            "id": 6,
+            "name": "Diana Evans",
+            "username": "dianaevans",
+            "email": "dianaevans@gmail.com",
+            "phone": "0324249929",
+            "website": "dianaevans.com"
+        },
+        {
+            "id": 7,
+            "name": "Eve Foster",
+            "username": "evefoster",
+            "email": "evefoster@gmail.com",
+            "phone": "0324249930",
+            "website": "evefoster.com"
+        },
+        {
+            "id": 8,
+            "name": "Frank Green",
+            "username": "frankgreen",
+            "email": "frankgreen@gmail.com",
+            "phone": "0324249931",
+            "website": "frankgreen.com"
+        },
+        {
+            "id": 9,
+            "name": "Grace Harris",
+            "username": "graceharris",
+            "email": "graceharris@gmail.com",
+            "phone": "0324249932",
+            "website": "graceharris.com"
+        },
+        {
+            "id": 10,
+            "name": "Henry Jackson",
+            "username": "henryjackson",
+            "email": "henryjackson@gmail.com",
+            "phone": "0324249933",
+            "website": "henryjackson.com"
+        },
+        {
+            "id": 11,
+            "name": "Ivy King",
+            "username": "ivyking",
+            "email": "ivyking@gmail.com",
+            "phone": "0324249934",
+            "website": "ivyking.com"
+        },
+        {
+            "id": 12,
+            "name": "Jack Lee",
+            "username": "jacklee",
+            "email": "jacklee@gmail.com",
+            "phone": "0324249935",
+            "website": "jacklee.com"
+        },
+        {
+            "id": 13,
+            "name": "Karen Miller",
+            "username": "karenmiller",
+            "email": "karenmiller@gmail.com",
+            "phone": "0324249936",
+            "website": "karenmiller.com"
+        },
+        {
+            "id": 14,
+            "name": "Leo Nelson",
+            "username": "leonelson",
+            "email": "leonelson@gmail.com",
+            "phone": "0324249937",
+            "website": "leonelson.com"
+        },
+        {
+            "id": 15,
+            "name": "Mia Owens",
+            "username": "miaowens",
+            "email": "miaowens@gmail.com",
+            "phone": "0324249938",
+            "website": "miaowens.com"
+        },
+        {
+            "id": 16,
+            "name": "Noah Parker",
+            "username": "noahparker",
+            "email": "noahparker@gmail.com",
+            "phone": "0324249939",
+            "website": "noahparker.com"
+        },
+        {
+            "id": 17,
+            "name": "Olivia Quinn",
+            "username": "oliviaquinn",
+            "email": "oliviaquinn@gmail.com",
+            "phone": "0324249940",
+            "website": "oliviaquinn.com"
+        },
+        {
+            "id": 18,
+            "name": "Paul Roberts",
+            "username": "paulroberts",
+            "email": "paulroberts@gmail.com",
+            "phone": "0324249941",
+            "website": "paulroberts.com"
+        },
+        {
+            "id": 19,
+            "name": "Quinn Scott",
+            "username": "quinnscott",
+            "email": "quinnscott@gmail.com",
+            "phone": "0324249942",
+            "website": "quinnscott.com"
+        },
+        {
+            "id": 20,
+            "name": "Rachel Turner",
+            "username": "rachelturner",
+            "email": "rachelturner@gmail.com",
+            "phone": "0324249943",
+            "website": "rachelturner.com"
+        }
+    ]
+}
