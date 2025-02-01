@@ -1,9 +1,10 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import axios from 'axios';
 import { useParams, Link } from 'react-router-dom';
+import { HomeType } from '../types/HomeType';
 
 const Read = () => {
-  const [data, setData] = useState(null);
+  const [data, setData] = useState<HomeType>();
   const [error, setError] = useState("");
   const { id } = useParams();
 

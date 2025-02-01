@@ -1,14 +1,21 @@
 import axios from "axios";
-import React, { useEffect, useState, useMemo } from "react";
+import  { useEffect, useState, useMemo } from "react";
 import { Link } from "react-router-dom";
+import { HomeType } from "../types/HomeType";
+// import { fetchProduct } from "../utils/HomeUtil";
 
 const Home = () => {
-  const [users, setUsers] = useState([]);
+  const [users, setUsers] = useState<HomeType[]>([]);
   const headers = useMemo(() => ({
     "Content-Type": "application/json",
     Authorization:
       "Bearer be65c1c7dbb1af760b8a450dd6875873b8a93e9a6af1dea2570b0880abf1cd13",
   }), []);
+
+  // const getPerson = async () => {
+  //   const data = await fetchProduct("https://gorest.co.in/public/v2/users");
+  //   setUsers(data);
+  // }
 
   useEffect(() => {
     axios
@@ -20,7 +27,7 @@ const Home = () => {
       .catch((err) => console.log(err));
   }, [headers]);
 
-  const handelDelete = (id) => {
+  const handelDelete = (id:number) => {
     const confirm = window.confirm("Are you sure you want to delete this user?");
     if (confirm) {
       axios
