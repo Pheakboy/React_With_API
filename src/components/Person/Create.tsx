@@ -1,4 +1,3 @@
-import axios from "axios";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -10,37 +9,38 @@ const Create = () => {
     status: "",
   });
   const [error, setError] = useState("");
-
   const navigate = useNavigate();
+  const API_URL = "https://gorest.co.in/public/v2/users";
+  const API_TOKEN =
+    "be65c1c7dbb1af760b8a450dd6875873b8a93e9a6af1dea2570b0880abf1cd13";
   const headers = {
     "Content-Type": "application/json",
-    Authorization:
-      "Bearer be65c1c7dbb1af760b8a450dd6875873b8a93e9a6af1dea2570b0880abf1cd13",
+    Authorization: `Bearer ${API_TOKEN}`,
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const fetchData = async (url: string, options: RequestInit) => {
+    const response = await fetch(url, options);
+    const data = await response.json();
+    if (!response.ok) {
+      throw new Error(data.message || "Something went wrong");
+    }
+    return data;
+  };
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (!values.name || !values.email || !values.gender || !values.status) {
       setError("All fields are required");
       return;
     }
-    setError(""); 
-    
-
-    axios
-      .post("https://gorest.co.in/public/v2/users", values, { headers })
-      .then((res) => {
-        console.log("User created:", res.data);
-        navigate("/"); 
-      })
-      .catch((err) => {
-        console.error(err);
-        if (err.response && err.response.data) {
-          setError(err.response.data.message || "Failed to create user");
-        } else {
-          setError("Failed to create user");
-        }
-      });
+    setError("");
+    const userData = await fetchData(API_URL, {
+      method: "POST",
+      headers,
+      body: JSON.stringify(values),
+    });
+    console.log("User created:", userData);
+    navigate("/");
   };
 
   return (
@@ -57,7 +57,7 @@ const Create = () => {
               Name
             </label>
             <input
-              onChange={e => setValues({ ...values, name: e.target.value })}
+              onChange={(e) => setValues({ ...values, name: e.target.value })}
               type="text"
               id="name"
               name="name"
@@ -74,7 +74,7 @@ const Create = () => {
               Email
             </label>
             <input
-              onChange={e => setValues({ ...values, email: e.target.value })}
+              onChange={(e) => setValues({ ...values, email: e.target.value })}
               type="email"
               id="email"
               name="email"
@@ -91,7 +91,7 @@ const Create = () => {
               Gender
             </label>
             <select
-              onChange={e => setValues({ ...values, gender: e.target.value })}
+              onChange={(e) => setValues({ ...values, gender: e.target.value })}
               id="gender"
               name="gender"
               value={values.gender}
@@ -110,7 +110,7 @@ const Create = () => {
               Status
             </label>
             <select
-              onChange={e => setValues({ ...values, status: e.target.value })}
+              onChange={(e) => setValues({ ...values, status: e.target.value })}
               id="status"
               name="status"
               value={values.status}
@@ -128,7 +128,10 @@ const Create = () => {
             >
               Submit
             </button>
-            <Link to="/" className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+            <Link
+              to="/"
+              className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+            >
               Back
             </Link>
           </div>

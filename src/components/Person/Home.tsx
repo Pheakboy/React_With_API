@@ -1,44 +1,42 @@
-import axios from "axios";
-import  { useEffect, useState, useMemo } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { HomeType } from "../types/HomeType";
-// import { fetchProduct } from "../utils/HomeUtil";
+import { HomeType } from "../../types/HomeType";
 
 const Home = () => {
   const [users, setUsers] = useState<HomeType[]>([]);
-  const headers = useMemo(() => ({
-    "Content-Type": "application/json",
-    Authorization:
-      "Bearer be65c1c7dbb1af760b8a450dd6875873b8a93e9a6af1dea2570b0880abf1cd13",
-  }), []);
+  const API_URL = "https://gorest.co.in/public/v2/users";
+  const API_TOKEN =
+    "be65c1c7dbb1af760b8a450dd6875873b8a93e9a6af1dea2570b0880abf1cd13";
 
-  // const getPerson = async () => {
-  //   const data = await fetchProduct("https://gorest.co.in/public/v2/users");
-  //   setUsers(data);
-  // }
+  const headers = {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${API_TOKEN}`,
+  };
+
+  const fetchData = async () => {
+    const response = await fetch(API_URL, { headers });
+    const data = await response.json();
+    setUsers(data);
+  };
 
   useEffect(() => {
-    axios
-      .get("https://gorest.co.in/public/v2/users", { headers })
-      .then((res) => {
-        console.log(res.data);
-        setUsers(res.data);
-      })
-      .catch((err) => console.log(err));
-  }, [headers]);
+    fetchData();
+  }, []);
 
-  const handelDelete = (id:number) => {
-    const confirm = window.confirm("Are you sure you want to delete this user?");
-    if (confirm) {
-      axios
-        .delete(`https://gorest.co.in/public/v2/users/${id}`, { headers })
-        .then((res) => {
-          console.log("User deleted:", res.data);
-          setUsers(users.filter(user => user.id !== id));
-        })
-        .catch((err) => console.log(err));
+  const handleDelete = async (id: number) => {
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this user?"
+    );
+    if (confirmDelete) {
+      const response = await fetch(`${API_URL}/${id}`, {
+        method: "DELETE",
+        headers,
+      });
+      console.log(response);
+      setUsers(users.filter((user) => user.id !== id));
+      console.log(`User with ID ${id} deleted successfully.`);
     }
-  }
+  };
 
   return (
     <div className="p-10 font-sans">
@@ -79,23 +77,30 @@ const Home = () => {
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
-              {users.map((user, index) => (
-                <tr key={index}>
+              {users.map((user) => (
+                <tr key={user.id}>
                   <td className="px-6 py-4 whitespace-nowrap">{user.id}</td>
                   <td className="px-6 py-4 whitespace-nowrap">{user.name}</td>
                   <td className="px-6 py-4 whitespace-nowrap">{user.email}</td>
                   <td className="px-6 py-4 whitespace-nowrap">{user.gender}</td>
                   <td className="px-6 py-4 whitespace-nowrap">{user.status}</td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <Link to={`/read/${user.id}`} className="bg-green-500 text-white px-2 py-1 rounded mr-2 hover:bg-green-600">
+                  <td className="px-6 py-4 whitespace-nowrap text-center">
+                    <Link
+                      to={`/read/${user.id}`}
+                      className="bg-green-500 text-white px-2 py-1 rounded mr-2 hover:bg-green-600"
+                    >
                       Read
                     </Link>
-                    <Link to = {`/update/${user.id}`} className="bg-blue-500 text-white px-2 py-1 rounded mr-2 hover:bg-blue-600">
+                    <Link
+                      to={`/update/${user.id}`}
+                      className="bg-blue-500 text-white px-2 py-1 rounded mr-2 hover:bg-blue-600"
+                    >
                       Edit
                     </Link>
                     <button
-                     onClick={e => handelDelete(user.id)}
-                     className="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600">  
+                      onClick={() => handleDelete(user.id)}
+                      className="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600"
+                    >
                       Delete
                     </button>
                   </td>
