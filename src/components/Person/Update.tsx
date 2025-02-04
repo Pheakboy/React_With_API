@@ -1,5 +1,4 @@
-import React, { useEffect, useState, useMemo } from "react";
-import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 
 const Update = () => {
@@ -13,29 +12,28 @@ const Update = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const headers = useMemo(
-    () => ({
-      "Content-Type": "application/json",
-      Authorization:
-        "Bearer be65c1c7dbb1af760b8a450dd6875873b8a93e9a6af1dea2570b0880abf1cd13",
-    }),
-    []
-  );
+  const API_URL = `https://gorest.co.in/public/v2/users/${id}`;
+  const API_TOKEN = "be65c1c7dbb1af760b8a450dd6875873b8a93e9a6af1dea2570b0880abf1cd13";
+
+  const headers = {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${API_TOKEN}`,
+  };
 
   useEffect(() => {
-    axios
-      .get(`https://gorest.co.in/public/v2/users/${id}`, { headers })
-      .then((res) => {
-        setValues(res.data);
-      })
-      .catch((err) => {
-        if (err.response && err.response.status === 404) {
-          setError("User not found");
-        } else {
-          setError("An error occurred while fetching the user data");
+    fetch(API_URL, { headers })
+      .then((response) => {
+        if (!response.ok) {
+          if (response.status === 404) {
+          } else {
+            throw new Error("An error occurred while fetching the user data");
+          }
         }
-      });
-  }, [id, headers]);
+        return response.json();
+      })
+      .then((data) => setValues(data))
+      .catch((err) => setError(err.message));
+  }, [id]);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -45,14 +43,20 @@ const Update = () => {
     }
     setError("");
 
-    axios
-      .put(`https://gorest.co.in/public/v2/users/${id}`, values, { headers })
-      .then(() => {
+    fetch(API_URL, {
+      method: "PUT",
+      headers,
+      body: JSON.stringify(values),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          return response.json().then((data) => {
+            throw new Error(data.message || "Failed to update user");
+          });
+        }
         navigate("/");
       })
-      .catch((err) => {
-        setError(err.response?.data?.message || "Failed to update user");
-      });
+      .catch((err) => setError(err.message));
   };
 
   return (
@@ -62,50 +66,29 @@ const Update = () => {
         <form onSubmit={handleSubmit}>
           {error && <p className="text-red-500 mb-3">{error}</p>}
           <div className="mb-4">
-            <label
-              htmlFor="name"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Name
-            </label>
+            <label className="block text-sm font-medium text-gray-700">Name</label>
             <input
               onChange={(e) => setValues({ ...values, name: e.target.value })}
               type="text"
-              id="name"
               value={values.name}
               className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md"
             />
           </div>
           <div className="mb-4">
-            <label
-              htmlFor="email"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Email
-            </label>
+            <label className="block text-sm font-medium text-gray-700">Email</label>
             <input
               onChange={(e) => setValues({ ...values, email: e.target.value })}
               type="email"
-              id="email"
-              name="email"
               value={values.email}
-              placeholder="Enter your email ..."
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md"
             />
           </div>
           <div className="mb-4">
-            <label
-              htmlFor="gender"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Gender
-            </label>
+            <label className="block text-sm font-medium text-gray-700">Gender</label>
             <select
               onChange={(e) => setValues({ ...values, gender: e.target.value })}
-              id="gender"
-              name="gender"
               value={values.gender}
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md"
             >
               <option value="">Select Gender</option>
               <option value="male">Male</option>
@@ -113,18 +96,11 @@ const Update = () => {
             </select>
           </div>
           <div className="mb-4">
-            <label
-              htmlFor="status"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Status
-            </label>
+            <label className="block text-sm font-medium text-gray-700">Status</label>
             <select
               onChange={(e) => setValues({ ...values, status: e.target.value })}
-              id="status"
-              name="status"
               value={values.status}
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md"
             >
               <option value="">Select Status</option>
               <option value="active">Active</option>
@@ -137,10 +113,7 @@ const Update = () => {
           >
             Update
           </button>
-          <Link
-            to="/"
-            className="bg-blue-500 text-white px-4 py-2 rounded ml-3"
-          >
+          <Link to="/" className="bg-blue-500 text-white px-4 py-2 rounded ml-3">
             Back
           </Link>
         </form>

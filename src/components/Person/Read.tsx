@@ -1,5 +1,4 @@
-import React, { useEffect, useState, useMemo } from "react";
-import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { HomeType } from "../../types/HomeType";
 
@@ -8,29 +7,38 @@ const Read = () => {
   const [error, setError] = useState("");
   const { id } = useParams();
 
-  const headers = useMemo(
-    () => ({
-      "Content-Type": "application/json",
-      Authorization:
-        "Bearer be65c1c7dbb1af760b8a450dd6875873b8a93e9a6af1dea2570b0880abf1cd13",
-    }),
-    []
-  );
+  const API_URL = `https://gorest.co.in/public/v2/users/${id}`;
+  const API_TOKEN = "be65c1c7dbb1af760b8a450dd6875873b8a93e9a6af1dea2570b0880abf1cd13";
+
+  const headers = {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${API_TOKEN}`,
+  };
 
   useEffect(() => {
-    axios
-      .get(`https://gorest.co.in/public/v2/users/${id}`, { headers })
-      .then((res) => {
-        setData(res.data);
-      })
-      .catch((err) => {
-        if (err.response && err.response.status === 404) {
-          setError("User not found");
-        } else {
-          setError("An error occurred while fetching the user data");
+    const fetchData = async () => {
+      try {
+        const response = await fetch(API_URL, { headers });
+        if (!response.ok) {
+          if (response.status === 404) {
+            throw new Error("User not found");
+          } else {
+            throw new Error("An error occurred while fetching the user data");
+          }
         }
-      });
-  }, [id, headers]); // Include `headers` here as it's now stable
+        const result = await response.json();
+        setData(result);
+      } catch (err: unknown) {
+        if (err instanceof Error) {
+          setError(err.message);
+        } else {
+          setError("An unexpected error occurred");
+        }
+      }
+    };
+
+    fetchData();
+  }, [id]);
 
   if (error) {
     return (
