@@ -1,49 +1,52 @@
-import Tooltip from "@mui/material/Tooltip";
-import IconButton from "@mui/material/IconButton";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import { useEffect, useState } from "react";
-
 const NavBar = () => {
-  const [loading, setLoading] = useState(false);
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      setLoading(false);
-    }, 2000);
-    return () => clearTimeout(timeout);
-  });
   return (
-    <nav className="bg-cyan-500 p-4">
+    <nav className="bg-gradient-to-r from-cyan-500 to-blue-500 p-4 shadow-lg">
       <div className="container mx-auto flex items-center justify-between">
         <div className="text-white text-2xl font-bold">
           <a href="/">MyApp</a>
         </div>
-        <ul className="flex space-x-6 text-white">
-          <Tooltip title="Click to see loading">
-            <IconButton onClick={() => setLoading(true)} loading={loading}>
-              <ShoppingCartIcon />
-            </IconButton>
-          </Tooltip>
+        <ul className="hidden md:flex space-x-6 text-white">
           <li>
-            <a href="/" className="hover:text-gray-300">
+            <a
+              href="/student"
+              className="hover:text-gray-300 transition duration-300"
+            >
+              Students
+            </a>
+          </li>
+          <li>
+            <a href="/" className="hover:text-gray-300 transition duration-300">
               Home
             </a>
           </li>
           <li>
-            <a href="/about" className="hover:text-gray-300">
+            <a
+              href="/about"
+              className="hover:text-gray-300 transition duration-300"
+            >
               About
             </a>
           </li>
           <li>
-            <a href="/product" className="hover:text-gray-300">
+            <a
+              href="/product"
+              className="hover:text-gray-300 transition duration-300"
+            >
               Product
             </a>
           </li>
           <li>
-            <a href="/materiUI" className="hover:text-gray-300">
+            <a
+              href="/materiUI"
+              className="hover:text-gray-300 transition duration-300"
+            >
               MateriUI
             </a>
           </li>
         </ul>
+        <div className="md:hidden">
+          <button className="text-white">Menu</button>
+        </div>
       </div>
     </nav>
   );

@@ -9,8 +9,8 @@ type PropsType = {
 const ReactHook = () => {
   const form = useForm<PropsType>({
     defaultValues: {
-        email: "example@gamil.com"
-    }
+      email: "example@gamil.com",
+    },
   });
   const {
     register,
@@ -39,7 +39,9 @@ const ReactHook = () => {
       onSubmit={handleSubmit(onSubmit)}
       className="flex flex-col items-center justify-center min-h-screen bg-gray-900 p-6 space-y-4"
     >
-        <h1 className="text-white text-2xl font-medium shadow-md hover:text-gray-300  ">L O G I N</h1>
+      <h1 className="text-white text-2xl font-medium shadow-md hover:text-gray-300  ">
+        L O G I N
+      </h1>
       <input
         {...register("email", {
           required: "Email is required",
@@ -49,10 +51,6 @@ const ReactHook = () => {
             }
             return true;
           },
-          // pattern: {
-          //     value:  /.+@gmail\.com$/ ,
-          //     message: "Email must be in format example@gmail.com"
-          // }
         })}
         type="text"
         placeholder="Email"

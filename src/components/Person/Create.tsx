@@ -29,6 +29,7 @@ const Create = () => {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+  
     if (!values.name || !values.email || !values.gender || !values.status) {
       setError("All fields are required");
       return;
@@ -57,7 +58,7 @@ const Create = () => {
               Name
             </label>
             <input
-              onChange={(e) => setValues({ ...values, name: e.target.value })}
+              // onChange={(e) => setValues({ ...values, name: e.target.value })}
               type="text"
               id="name"
               name="name"
@@ -74,7 +75,7 @@ const Create = () => {
               Email
             </label>
             <input
-              onChange={(e) => setValues({ ...values, email: e.target.value })}
+              // onChange={(e) => setValues({ ...values, email: e.target.value })}
               type="email"
               id="email"
               name="email"
@@ -91,7 +92,7 @@ const Create = () => {
               Gender
             </label>
             <select
-              onChange={(e) => setValues({ ...values, gender: e.target.value })}
+              // onChange={(e) => setValues({ ...values, gender: e.target.value })}
               id="gender"
               name="gender"
               value={values.gender}
@@ -110,7 +111,7 @@ const Create = () => {
               Status
             </label>
             <select
-              onChange={(e) => setValues({ ...values, status: e.target.value })}
+              // onChange={(e) => setValues({ ...values, status: e.target.value })}
               id="status"
               name="status"
               value={values.status}
