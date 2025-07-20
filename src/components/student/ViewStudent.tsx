@@ -2,7 +2,6 @@ import { useParams } from "react-router-dom";
 import ButtonComponent from "./ButtonComponents";
 import { useEffect, useState } from "react";
 import { StudentType } from "../../types/StudentType";
-// import Loader from "./Loading";
 import Tooltip from "./Tooltip";
 
 const ViewStudent = () => {

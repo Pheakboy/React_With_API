@@ -8,14 +8,8 @@ import {
 } from "flowbite-react";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { StudentType } from "../../types/StudentType";
 
-type StudentType = {
-  id: number;
-  name: string;
-  age: number;
-  place: string;
-  phone: string;
-};
 
 const StudentTable = () => {
   const [students, setStudents] = useState<StudentType[]>([]);
@@ -34,6 +28,7 @@ const StudentTable = () => {
       .then((res) => {
         alert("Student deleted successfully");
         window.location.reload();
+        console.log(res);
       })
       .catch((err) => console.error(err.message));
   };

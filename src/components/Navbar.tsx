@@ -7,16 +7,16 @@ const NavBar = () => {
         </div>
         <ul className="hidden md:flex space-x-6 text-white">
           <li>
+            <a href="/" className="hover:text-gray-300 transition duration-300">
+              Home
+            </a>
+          </li>
+          <li>
             <a
               href="/student"
               className="hover:text-gray-300 transition duration-300"
             >
               Students
-            </a>
-          </li>
-          <li>
-            <a href="/" className="hover:text-gray-300 transition duration-300">
-              Home
             </a>
           </li>
           <li>
@@ -27,22 +27,22 @@ const NavBar = () => {
               About
             </a>
           </li>
-          <li>
+          {/* <li>
             <a
               href="/product"
               className="hover:text-gray-300 transition duration-300"
             >
               Product
             </a>
-          </li>
-          <li>
+          </li> */}
+          {/* <li>
             <a
               href="/materiUI"
               className="hover:text-gray-300 transition duration-300"
             >
               MateriUI
             </a>
-          </li>
+          </li> */}
         </ul>
         <div className="md:hidden">
           <button className="text-white">Menu</button>

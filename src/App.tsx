@@ -6,7 +6,7 @@ import Read from "./components/Person/Read";
 import Navbar from "./components/Navbar";
 import ProductPage from "./pages/ProductPage";
 import AboutPage from "./pages/AboutPage";
-import MaterialUI from "./pages/MaterialUI";
+// import MaterialUI from "./pages/MaterialUI";
 import CreateStudent from "./components/student/CreateStudent";
 import EditStudent from "./components/student/EditStudent";
 import ViewStudent from "./components/student/ViewStudent";
@@ -24,7 +24,7 @@ function App() {
         <Route path="/read/:id" element={<Read />}></Route>
 
         <Route path="/about" element={<AboutPage />}></Route>
-        <Route path="/materiUI" element={<MaterialUI />}></Route>
+        {/* <Route path="/materiUI" element={<MaterialUI />}></Route> */}
 
         <Route path="/product" element={<ProductPage />}></Route>
 
